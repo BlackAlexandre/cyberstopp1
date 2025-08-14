@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber_Stop - Lan House 100% Automatizada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ffff; /* Ciano */
+            --secondary: #1a1a1a; /* Fundo escuro */
+            --accent: #00b3b3; /* Azul neon */
+            --light: #f8f8f8; /* Texto claro */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', 'Roboto', sans-serif;
+            background-color: var(--secondary);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+                url('https://images.unsplash.com/photo-1643297654416-0575d9d7d5d9');
+            background-attachment: fixed;
+        }
+
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 15px var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a {
+            position: relative;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-active {
+            color: var(--primary) !important;
+            transform: scale(1.05);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+            animation: glow 1s infinite alternate;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1511512578047-dfb6470929aa') no-repeat center center/cover;
+            position: relative;
+            color: var(--light);
+            height: 100vh;
+            min-height: 700px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px var(--primary);
+            font-weight: 800;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--primary);
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            margin: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--primary), 0 0 30px rgba(0, 255, 255, 0.4);
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px var(--primary); }
+            100% { text-shadow: 0 0 20px var(--primary), 0 0 30px var(--accent); }
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 3rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .plans-table, .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .plans-table th, .services-table th {
+            background-color: var(--accent);
+            color: var(--light);
+            padding: 1rem;
+        }
+
+        .plans-table td, .services-table td {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--light);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .plans-table td:hover, .services-table td:hover {
+            background-color: rgba(0, 180, 180, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            background-color: var(--dark);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: var(--light);
+            border-radius: 4px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        footer {
+            padding: 3rem 2rem;
+            background-color: var(--dark);
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Events Section */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,50,50,0.5) 100%);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .event-card {
+            position: relative;
+        }
+        
+        .event-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+            border-color: var(--accent);
+        }
+        
+        .event-card i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-card {
+            background: rgba(0, 180, 180, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .contact-card:hover {
+            background: rgba(0, 180, 180, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background-color: var(--secondary);
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close {
+            color: var(--primary);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--accent);
+        }
+
+        @keyframes scanline {
+            0% { background-position: 0 -1000px; }
+            100% { background-position: 0 1000px; }
+        }
+        
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(
+                    rgba(0, 255, 255, 0.05) 50%,
+                    transparent 50%) 0 0 / 100% 4px,
+                linear-gradient(90deg,
+                    rgba(0, 255, 255, 0.05) 50%,
+                    transparent 50%) 0 0 / 8px 100%;
+            animation: scanline 4s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Cyber_Stop</a>
+        <nav>
+            <ul>
+                <li><a href="#about">Sobre Nós</a></li>
+                <li><a href="#plans">Planos e Preços</a></li>
+                <li><a href="#request-card">Solicitar Cartão</a></li>
+                <li><a href="#environment">Ver o Ambiente</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Lan House 100% Automatizada</h1>
+        <p>Experimente a maior e mais inovadora lan house da cidade, com automação total e equipamentos de alta qualidade.</p>
+        <div>
+            <a href="#request-card" class="btn">Solicitar Cartão de Cliente</a>
+            <a href="#plans" class="btn">Planos e Preços</a>
+            <a href="#environment" class="btn">Ver o Ambiente</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">Sobre Nós</h2>
+        <p>A Cyber_Stop será a maior e mais inovadora lan house 100% automatizada da cidade. Com entrada automática, computadores que bloqueiam quando o tempo acaba, e um aplicativo para gerenciar créditos, oferecemos uma experiência única e confortável.</p>
+        <p>Acumule pontos para trocar por brindes e aproveite nosso espaço gamer, salas privadas, estações de streaming e área de snacks.</p>
+    </section>
+
+    <section id="plans" class="section">
+        <h2 class="section-title">Planos e Preços</h2>
+        <h3>Preços por Hora</h3>
+        <table class="services-table">
+            <thead>
+                <tr>
+                    <th>Serviço</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Computador</td>
+                    <td>R$ 8,50/h</td>
+                </tr>
+                <tr>
+                    <td>Xbox Series S</td>
+                    <td>R$ 9,00/h</td>
+                </tr>
+                <tr>
+                    <td>PS5</td>
+                    <td>R$ 9,50/h</td>
+                </tr>
+                <tr>
+                    <td>Impressão P&B</td>
+                    <td>R$ 0,50</td>
+                </tr>
+                <tr>
+                    <td>Impressão Colorida</td>
+                    <td>R$ 1,00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Planos Mensais</h3>
+        <table class="plans-table">
+            <thead>
+                <tr>
+                    <th>Plano</th>
+                    <th>Preço</th>
+                    <th>Benefícios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Plano Silver</td>
+                    <td>R$ 99,90/mês</td>
+                    <td>20 horas de uso, 5 horas em consoles, 10 impressões P&B grátis</td>
+                </tr>
+                <tr>
+                    <td>Plano Gold</td>
+                    <td>R$ 199,90/mês</td>
+                    <td>40 horas de uso, 10 horas em consoles, 20 impressões P&B grátis</td>
+                </tr>
+                <tr>
+                    <td>Plano Diamond</td>
+                    <td>R$ 349,90/mês</td>
+                    <td>Horas ilimitadas, 20 impressões coloridas grátis, acesso a eventos exclusivos</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="request-card" class="section">
+        <h2 class="section-title">Solicitar Cartão de Cliente</h2>
+        <div class="contact-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Endereço</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="plan">Escolha seu plano</label>
+                    <select id="plan" name="plan">
+                        <option value="silver">Plano Silver</option>
+                        <option value="gold">Plano Gold</option>
+                        <option value="diamond">Plano Diamond</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Solicitar Cartão</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="environment" class="section">
+        <h2 class="section-title">Ambiente e Estrutura</h2>
+        <p>Veja como é o nosso espaço gamer, com estações de streaming, salas privadas e área de convivência.</p>
+        <div class="gallery slider">
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8cdd3" alt="Ambiente Gamer">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dd2f9601-4bb6-4847-bab2-2cf0e4bb2e69.png" alt="Salas Privadas">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c7b5ac2c-c9ff-4924-84ae-e77ac932d897.png" alt="Estação de Streaming">
+        </div>
+    </section>
+
+    <section id="games" class="section">
+        <h2 class="section-title">Jogos Disponíveis</h2>
+        <div class="games-list">
+            <div class="game-item">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/35ca1586-2a45-46d5-84f4-66f32ca3fd79.png" alt="Jogo 1">
+                <p>Jogo 1</p>
+            </div>
+            <div class="game-item">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ebfdc500-90d1-43f4-aa04-53e0107bd6c0.png" alt="Jogo 2">
+                <p>Jogo 2</p>
+            </div>
+            <div class="game-item">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9e0b279d-c741-4e88-b226-bbe1c9e6a1f3.png" alt="Jogo 3">
+                <p>Jogo 3</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="events" class="section">
+        <h2 class="section-title">Eventos e Campeonatos</h2>
+        <p>Participe dos nossos eventos exclusivos</p>
+        <div class="events-grid">
+            <div class="event-card" onclick="openEventModal('event1')">
+                <div class="event-badge">POPULAR</div>
+                <h3>TORNEIO DE VALORANT</h3>
+                <p><i class="fas fa-calendar-alt"></i> 21/10/2023 • 19:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 5.000</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event2')">
+                <h3>CAMPEONATO DE CS:GO</h3>
+                <p><i class="fas fa-calendar-alt"></i> 28/10/2023 • 15:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 3.500</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event3')">
+                <h3>LIGA DE FIFA 23</h3>
+                <p><i class="fas fa-calendar-alt"></i> 05/11/2023 • 14:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 2.000</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event4')">
+                <div class="event-badge">NOVO</div>
+                <h3>MARATONA DE LOL</h3>
+                <p><i class="fas fa-calendar-alt"></i> 12/11/2023 • 10:00</p> 
+                <p><i class="fas fa-trophy"></i> R$ 7.000</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event5')">
+                <h3>TORNEIO DE FORTNITE</h3>
+                <p><i class="fas fa-calendar-alt"></i> 19/11/2023 • 16:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 4.000</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event6')">
+                <h3>RAINBOW SIX</h3>
+                <p><i class="fas fa-calendar-alt"></i> 26/11/2023 • 13:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 4.500</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+            <div class="event-card" onclick="openEventModal('event7')">
+                <div class="event-badge">ESPECIAL</div>
+                <h3>HACKATHON GAMER</h3>
+                <p><i class="fas fa-calendar-alt"></i> 03/12/2023 • 09:00</p>
+                <p><i class="fas fa-trophy"></i> R$ 10.000</p>
+                <button class="btn-small">Inscrever-se</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            <h2 id="modalTitle">Título do Evento</h2>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <button class="btn">Inscrever-se</button>
+        </div>
+    </div>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Contato</h2>
+        <div class="contact-grid">
+            <div class="contact-card" onclick="openContact('whatsapp')">
+                <i class="fab fa-whatsapp"></i>
+                <h3>WhatsApp</h3>
+                <p>(41) 99567-9807</p>
+            </div>
+            <div class="contact-card" onclick="openContact('email')">
+                <i class="fas fa-envelope"></i>
+                <h3>Email</h3>
+                <p>contato@cyberstop.com</p>
+            </div>
+            <div class="contact-card" onclick="openContact('location')">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Localização</h3>
+                <p>Rua Ponta Grossa, 263, Centro – Guaratuba/PR</p>
+            </div>
+        </div>
+        
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div id="contactModalContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="copyright">&copy; 2023 Cyber_Stop. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getHash()).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Modal functions
+        // Gallery Auto-Slide
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(() => showSlide(currentSlide + 1), 5000);
+
+        const eventsData = {
+            event1: {
+                title: "TORNEIO DE VALORANT",
+                date: "21/10/2023 às 19:00", 
+                location: "Cyber_Stop Arena",
+                prize: "R$ 5.000",
+                rules: "Equipes de 5 jogadores, eliminatória direta",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/34709188-bc40-4869-b723-8bc13e83fad2.png"
+            },
+            event2: {
+                title: "CAMPEONATO DE CS:GO",
+                date: "28/10/2023 às 15:00",
+                location: "Cyber_Stop Arena", 
+                prize: "R$ 3.500",
+                rules: "Equipes de 5 jogadores, melhor de 3",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9ba9f8df-eb4d-415a-9225-37abfa09df98.png"  
+            },
+            event3: {
+                title: "LIGA DE FIFA 23",
+                date: "05/11/2023 às 14:00",
+                location: "Cyber_Stop Arena",
+                prize: "R$ 2.000 + Controle Pro",
+                rules: "1v1, eliminatória simples",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fifa23-tournament.jpg"
+            },
+            event4: {
+                title: "MARATONA DE LOL",
+                date: "12/11/2023 às 10:00", 
+                location: "Cyber_Stop Arena",
+                prize: "R$ 7.000 + Teclados Mecânicos",
+                rules: "Equipes de 5 jogadores, MD3",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/lol-marathon.jpg"
+            },
+            event5: {
+                title: "TORNEIO DE FORTNITE",
+                date: "19/11/2023 às 16:00",
+                location: "Cyber_Stop Arena",
+                prize: "R$ 4.000 + Headsets",
+                rules: "Duplas, 10 partidas acumulativas",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fortnite-event.jpg"
+            },
+            event6: {
+                title: "CAMPEONATO DE RAINBOW SIX",
+                date: "26/11/2023 às 13:00",
+                location: "Cyber_Stop Arena",
+                prize: "R$ 4.500 + Mouses Premium",
+                rules: "Equipes de 5 jogadores, MD3",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/r6-tournament.jpg"  
+            },
+            event7: {
+                title: "HACKATHON GAMER",
+                date: "03/12/2023 às 09:00",
+                location: "Sala de Eventos VIP", 
+                prize: "R$ 10.000 + Cadeiras Gamer",
+                rules: "24h de desenvolvimento + game jam",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/hackathon-event.jpg"
+            }
+        };
+
+        function openEventModal(eventId) {
+            const event = eventsData[eventId];
+            document.getElementById('modalTitle').textContent = event.title;
+            document.getElementById('modalContent').innerHTML = `
+                <div class="modal-image">
+                    <img src="${event.image}" alt="${event.title}">
+                </div>
+                <div class="modal-details">
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Data:</strong> ${event.date}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Local:</strong> ${event.location}</p>
+                    <p><i class="fas fa-trophy"></i> <strong>Premiação:</strong> ${event.prize}</p>
+                    <p><i class="fas fa-book"></i> <strong>Regras:</strong> ${event.rules}</p>
+                </div>
+            `;
+            document.getElementById('eventModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openContact(type) {
+            let content = '';
+            if(type === 'whatsapp') {
+                content = `<h3>WhatsApp</h3><p>(41) 99567-9807</p>`;
+            } else if(type === 'email') {
+                content = `<h3>Email</h3><p>contato@cyberstop.com</p>`;
+            } else {
+                content = `<h3>Localização</h3><p>Rua Ponta Grossa, 263, Centro – Guaratuba/PR</p><div id="map" style="height: 300px; margin-top: 1rem;"></div>`;
+            }
+            document.getElementById('contactModalContent').innerHTML = content;
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').style.display = 'none';
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
